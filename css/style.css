@@ -1,0 +1,277 @@
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #050505;
+            color: #fff;
+            font-family: 'Consolas', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 2rem;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #bc13fe,
+                0 0 40px #bc13fe;
+            text-align: center;
+        }
+
+        #game-wrapper {
+            position: relative;
+            background: #000;
+            border-radius: 16px;
+            box-shadow: 0 0 50px rgba(188, 19, 254, 0.2);
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            width: fit-content;
+        }
+
+        /* ARENA CONTAINER */
+        #canvas-container {
+            background: #080808;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* IN-ARENA STATUS (ENERGY & COMBO) */
+        #arena-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 15px;
+            background: #080808; /* Blends with canvas */
+            border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
+        }
+
+        .status-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* BOTTOM PANEL: STATS (LEFT) & KEYS (RIGHT) */
+        #bottom-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #111;
+            border-top: 1px solid #333;
+        }
+
+        /* STATS PANEL */
+        #stats-panel {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #888;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            font-family: 'Consolas', monospace;
+        }
+
+        #top-score-val { color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        #total-games-val { color: #00f3ff; text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+
+        /* HEADER UI */
+        #score-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(180deg, #111, #0a0a0a);
+            border-bottom: 1px solid #333;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            z-index: 10;
+        }
+
+        canvas {
+            display: block;
+            background-color: #080808; 
+            cursor: crosshair;
+        }
+
+        #ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 20;
+            transition: opacity 0.3s;
+            text-align: center;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        button {
+            background: transparent;
+            color: #00f3ff;
+            border: 2px solid #00f3ff;
+            padding: 12px 40px;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+            margin-top: 20px;
+            transition: all 0.2s;
+            text-shadow: 0 0 5px rgba(0, 243, 255, 0.8);
+        }
+
+        button:hover {
+            background: #00f3ff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
+            text-shadow: none;
+        }
+
+        .hunger-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .hunger-bar {
+            width: 100px;
+            height: 6px;
+            background: #222;
+            border-radius: 3px;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px #000;
+        }
+        
+        #hunger-fill {
+            height: 100%;
+            background: #00f3ff;
+            width: 100%;
+            box-shadow: 0 0 10px #00f3ff;
+            transition: width 0.1s linear, background 0.3s;
+        }
+
+        #score-val {
+            color: #bc13fe;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(188, 19, 254, 0.5);
+        }
+
+        /* INPUT DISPLAY (FAKE KEYS) */
+        #input-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .key-row {
+            display: flex;
+            gap: 4px;
+        }
+
+        .key {
+            width: 32px;
+            height: 32px;
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 0 #000;
+            transform: translateY(0);
+            transition: all 0.05s;
+        }
+
+        .key.active {
+            background: #00f3ff;
+            color: #000;
+            border-color: #00f3ff;
+            box-shadow: 0 0 10px #00f3ff;
+            transform: translateY(3px);
+            box-shadow: 0 0 0 #000;
+        }
+
+        /* FX: CRITICAL MODE */
+        body.critical::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 0 0 100px rgba(255, 0, 0, 0.5);
+            animation: pulse-red 0.5s infinite alternate;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes pulse-red {
+            from { box-shadow: inset 0 0 50px rgba(255, 0, 0, 0.2); }
+            to { box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.6); }
+        }
+
+        /* FX: SCREEN SHAKE */
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+            40%, 60% { transform: translate3d(8px, 0, 0); }
+        }
+        /* FX: COMBO POP */
+        .pop {
+            animation: pop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); color: #fff; text-shadow: 0 0 20px #ff00ea; }
+            100% { transform: scale(1); }
+        }
