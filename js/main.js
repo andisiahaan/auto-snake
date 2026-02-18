@@ -171,6 +171,12 @@ function gameLoop() {
     let nextMove = decideNextMove(snake, foods);
 
     if (nextMove) {
+        // Redundancy Safety Check
+        if (isCollision(nextMove.x, nextMove.y, snake)) {
+             gameOver("GAME OVER");
+             return;
+        }
+
         const dx = nextMove.x - snake[0].x;
         const dy = nextMove.y - snake[0].y;
         updateKeyVisuals(dx, dy);
